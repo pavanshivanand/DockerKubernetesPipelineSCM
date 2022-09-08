@@ -1,6 +1,6 @@
-def containerName="docker-pipeline"
+def containerName="dockerkubernetespipelinescm"
 def tag="latest"
-def dockerHubUser="anujsharma1990"
+def dockerHubUser="pavanshivanand"
 def httpPort="8090"
 
 node {
@@ -23,10 +23,10 @@ node {
     }
 
     stage('Push to Docker Registry'){
-        withCredentials([usernamePassword(credentialsId: 'dockerHubAccount', usernameVariable: 'dockerUser', passwordVariable: 'dockerPassword')]) {
-            sh "docker login -u $dockerUser -p $dockerPassword"
-            sh "docker tag $containerName:$tag $dockerUser/$containerName:$tag"
-            sh "docker push $dockerUser/$containerName:$tag"
+        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            sh "docker login -u $USERNAME -p $PASSWORD"
+            sh "docker tag $containerName:$tag $USERNAME/$containerName:$tag"
+            sh "docker push $USERNAME/$containerName:$tag"
             echo "Image push complete"
         }
     }
@@ -39,8 +39,10 @@ node {
         */
         sh """
            kubectl get pods
-           kubectl delete deployment kubernetes-bootcamp | true
-           kubectl create deployment kubernetes-bootcamp --image=docker.io/anujsharma1990/docker-pipeline --port=8090
+           kubectl delete deployment dockerkubernetespipelinescm | true
+           kubectl create deployment dockerkubernetespipelinescm --image=docker.io/pavanshivanand/dockerkubernetespipelinescm
+           kubectl expose deployment dockerkubernetespipelinescm --type=NodePort --port=8090
+           kubectl scale deployment dockerkubernetespipelinescm --replicas=4
            kubectl get pods
         """
     }
