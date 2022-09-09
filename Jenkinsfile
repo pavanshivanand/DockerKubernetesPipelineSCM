@@ -38,6 +38,7 @@ node {
         echo "Application started on port: ${httpPort} (http)"
         */
         sh """
+           kubectl version
            kubectl get pods
            kubectl delete deployment dockerkubernetespipelinescm | true
            kubectl create deployment dockerkubernetespipelinescm --image=docker.io/pavanshivanand/dockerkubernetespipelinescm
