@@ -41,6 +41,7 @@ node {
            sh "kubectl version"
            sh "kubectl get pods"
            sh "kubectl delete deployment dockerkubernetespipelinescm | true"
+           sh "kubectl delete service dockerkubernetespipelinescm | true"
            sh "kubectl create deployment dockerkubernetespipelinescm --image=docker.io/pavanshivanand/dockerkubernetespipelinescm"
            sh "kubectl expose deployment dockerkubernetespipelinescm --type=NodePort --port=8090"
            sh "kubectl get pods"
