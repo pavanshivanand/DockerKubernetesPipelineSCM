@@ -37,17 +37,15 @@ node {
         sh "docker run -d --rm -p $httpPort:$httpPort --name $containerName $dockerHubUser/$containerName:$tag"
         echo "Application started on port: ${httpPort} (http)"
         */
-        sh """
         kubeconfig(credentialsId: 'kubectl', serverUrl: '') {
-           kubectl version
-           kubectl get pods
-           kubectl delete deployment dockerkubernetespipelinescm | true
-           kubectl create deployment dockerkubernetespipelinescm --image=docker.io/pavanshivanand/dockerkubernetespipelinescm
-           kubectl expose deployment dockerkubernetespipelinescm --type=NodePort --port=8090
-           kubectl scale deployment dockerkubernetespipelinescm --replicas=4
-           kubectl get pods
+           sh "kubectl version"
+           sh "kubectl get pods"
+           sh "kubectl delete deployment dockerkubernetespipelinescm | true"
+           sh "kubectl create deployment dockerkubernetespipelinescm --image=docker.io/pavanshivanand/dockerkubernetespipelinescm"
+           sh "kubectl expose deployment dockerkubernetespipelinescm --type=NodePort --port=8090"
+           sh "kubectl scale deployment dockerkubernetespipelinescm --replicas=4"
+           sh "kubectl get pods"
            }
-        """
     }
 
 }
