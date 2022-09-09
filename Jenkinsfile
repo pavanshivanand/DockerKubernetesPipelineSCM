@@ -40,7 +40,10 @@ node {
         kubeconfig(credentialsId: 'kubectl', serverUrl: '') {
            sh "kubectl get pods"
            sh "kubectl delete deployment dockerkubernetespipelinescm | true"
+           sh "kubectl delete service dockerkubernetespipelinescm | true"
            sh "kubectl create deployment dockerkubernetespipelinescm --image=docker.io/pavanshivanand/dockerkubernetespipelinescm --port=8090"
+           sh "kubectl expose deployment dockerkubernetespipelinescm --type=LoadBalancer --port=8090"
+           sh "kubectl scale deployment dockerkubernetespipelinescm --replicas=4"
            sh "kubectl get pods"
            }
     }
