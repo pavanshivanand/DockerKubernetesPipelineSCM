@@ -38,6 +38,7 @@ node {
         echo "Application started on port: ${httpPort} (http)"
         */
         sh """
+        kubeconfig(credentialsId: 'kubectl', serverUrl: '') {
            kubectl version
            kubectl get pods
            kubectl delete deployment dockerkubernetespipelinescm | true
@@ -45,6 +46,7 @@ node {
            kubectl expose deployment dockerkubernetespipelinescm --type=NodePort --port=8090
            kubectl scale deployment dockerkubernetespipelinescm --replicas=4
            kubectl get pods
+           }
         """
     }
 
