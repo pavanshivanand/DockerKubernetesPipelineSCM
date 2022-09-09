@@ -43,7 +43,6 @@ node {
            sh "kubectl delete deployment dockerkubernetespipelinescm | true"
            sh "kubectl create deployment dockerkubernetespipelinescm --image=docker.io/pavanshivanand/dockerkubernetespipelinescm"
            sh "kubectl expose deployment dockerkubernetespipelinescm --type=NodePort --port=8090"
-           sh "kubectl scale deployment dockerkubernetespipelinescm --replicas=4"
            sh "kubectl get pods"
            }
     }
